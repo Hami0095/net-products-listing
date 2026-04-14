@@ -1,19 +1,17 @@
-# 📦 Products Inventory System
+# Products Inventory System
 
 A modern, full-stack products management system built with **.NET 9** and **React**. This project demonstrates a secure Web API, a premium frontend experience, and a distributed event-driven architecture design.
 
-![Architecture Visualization](architecture_viz.png)
-
-## 🎥 Video Demo
+## Video Demo
 [Watch the Demo Video](demo.mp4)
 
-## 📐 Architecture & System Design
+## Architecture & System Design
 A detailed breakdown of the microservices event-driven architecture is available in the [ARCHITECTURE.md](./ARCHITECTURE.md) file.
 
-## 🔗 Repository
+## Repository
 GitHub: [Hami0095/net-products-listing](https://github.com/Hami0095/net-products-listing)
 
-## 🚀 Quick Start
+## Quick Start
 
 ### 1. Prerequisites
 - [.NET 9 SDK](https://dotnet.microsoft.com/download/dotnet/9.0)
@@ -36,7 +34,7 @@ npm run dev
 
 ---
 
-## 🏗️ Architecture
+## Architecture
 
 The system is designed to fit into a **Microservices Event-Driven Architecture**.
 
@@ -60,14 +58,26 @@ graph TB
         Bus{{"Message Bus (RabbitMQ / Kafka)"}}
     end
 
+    subgraph "Storage"
+        PDB[(Products DB)]
+        ODB[(Orders DB)]
+        PYDB[(Payments DB)]
+    end
+
     Web --> GW
     GW --> Products
     GW --> Orders
 
     Products -- "ProductCreated" --> Bus
+    Products --- PDB
+
     Orders -- "OrderPlaced" --> Bus
+    Orders --- ODB
+
     Bus -- "Process Payment" --> Payments
     Payments -- "PaymentConfirmed" --> Bus
+    Payments --- PYDB
+
     Bus -- "Ship Order" --> Orders
 ```
 
@@ -80,14 +90,14 @@ graph TB
 
 ---
 
-## 🧪 Testing
+## Testing
 
 Run the full test suite from the root:
 ```powershell
 dotnet test backend/ProductsApp.sln
 ```
 
-## 🛠️ Tech Stack
+## Tech Stack
 - **Backend**: C#, .NET 9, ASP.NET Core Web API, JWT Bearer Auth.
 - **Frontend**: React, Vite, TypeScript, Vanilla CSS.
 - **Testing**: xUnit, Moq, FluentAssertions, Microsoft.AspNetCore.Mvc.Testing.
