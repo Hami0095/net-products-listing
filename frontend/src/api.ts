@@ -1,13 +1,13 @@
 const API_BASE = 'http://localhost:5000/api';
 
-export interface Product {
+export type Product = {
   id: string;
   name: string;
   description: string;
   price: number;
   colour: string;
   createdAt: string;
-}
+};
 
 export const login = async () => {
   const res = await fetch(`${API_BASE}/auth/login`, {
